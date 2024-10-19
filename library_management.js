@@ -40,7 +40,7 @@ class Section {
         if (book instanceof Book) {
             this.books.push(book);
         } else {
-            console.error("Only a valid Book instance can be added.");
+            console.error("Enter valid name");
         }
     }
     
@@ -84,3 +84,24 @@ class Patron {
         console.log(`Name: ${this.name}, Book returned: ${book.title}"`);
     }
 }
+
+
+// Task 4 -  Create a VIPPatron Class that Inherits from Patron
+
+
+class VIPPatron extends Patron {
+    constructor (name) {
+        super(name) // Calling the parent class constructor
+        this.priority = true  
+        // All VIP patrons will have priority by default
+    }
+
+    // Overriding the borrowBook method to handle priority borrowing
+    borrowBook(book) {
+        if (book.isAvailable) {
+            super.borrowBook(book); // If the book is available, borrow it as usual
+        } else {
+            console.log(`VIP ${this.name} is requesting priority to borrow "${book.title}" by ${book.author}.`);
+        }
+}}
+
