@@ -26,3 +26,34 @@ set isAvailable(availability) {
     }
 }
 }
+
+
+// Task 2 - Create a Section Class
+
+class Section {
+    constructor( name, books) {
+        this.name = name;
+        this.books = [];
+    }
+
+    addBook(book) {
+        if (book instanceof Book) {
+            this.books.push(book);
+        } else {
+            console.error("Only a valid Book instance can be added.");
+        }
+    }
+    
+// Finding the number of books available 
+getAvailableBooks() {
+    return this.books.filter(book => book.isAvailable).length;
+}
+
+// Method to list all books with their availability status
+listBooks() {
+    this.books.forEach(book => {
+        console.log(`${book.getDetails()} - Available: ${book.isAvailable}`);
+    });
+}
+}
+
