@@ -8,23 +8,23 @@ class Book {
         this.ISBN = ISBN;
         this._isAvailable = true;
     }
-// Getter for book,author and ISBN details
+    // Getter for book,author and ISBN details
     getDetails() {
         return `${this.title} by author ${this.author}, ISBN - ${this.ISBN}`
     }
-// Getter for if the book is available
-get isAvailable() {
+    // Getter for if the book is available
+    get isAvailable() {
     return this.isAvailable;
 }
 
-// Setter for availability of the book
-set isAvailable(availability) {
+    // Setter for availability of the book
+    set isAvailable(availability) {
     if (typeof availability === 'boolean') {
         this.isAvailable = availability;
     } else {
         console.error("Invalid input - Availability has to be a boolean.");
     }
-}
+    }
 }
 
 
@@ -44,16 +44,43 @@ class Section {
         }
     }
     
-// Finding the number of books available 
-getAvailableBooks() {
-    return this.books.filter(book => book.isAvailable).length;
-}
+    // Finding the number of books available 
+    getAvailableBooks() {
+        return this.books.filter(book => book.isAvailable).length;
+    }
 
-// Method to list all books with their availability status
-listBooks() {
-    this.books.forEach(book => {
-        console.log(`${book.getDetails()} - Available: ${book.isAvailable}`);
+    // Method to list all books with their availability status
+    listBooks() {
+        this.books.forEach(book => {
+            console.log(`${book.getDetails()} - Available: ${book.isAvailable}`);
     });
-}
+    }
 }
 
+
+// Task 3 - Create a Patron Class
+
+class Patron {
+    constructor( name ) {
+        this.name = name; 
+        this.borrowedBooks = [];
+    }
+
+
+    borrowBook(book) {
+        if (book.isAvailable) {
+            this.borrowedBooks.push(book);
+            book.isAvailable = false;
+            console.log(`Name: ${this.name}, Book borrowed: ${book.title}`);
+        }
+
+        else (console.log("This book is currently unavailable"))
+    }
+
+
+    returnBook(book) {
+        book.isAvailable = true; // Set the book as available
+        this.borrowedBooks = this.borrowedBooks.filter(borrowedBook => borrowedBook !== book); // Remove the book from borrowedBooks array
+        console.log(`Name: ${this.name}, Book returned: ${book.title}"`);
+    }
+}
