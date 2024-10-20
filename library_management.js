@@ -14,13 +14,13 @@ class Book {
     }
     // Getter for if the book is available
     get isAvailable() {
-    return this.isAvailable;
+    return this._isAvailable;
 }
 
     // Setter for availability of the book
     set isAvailable(availability) {
     if (typeof availability === 'boolean') {
-        this.isAvailable = availability;
+        this._isAvailable = availability;
     } else {
         console.error("Invalid input - Availability has to be a boolean.");
     }
@@ -28,7 +28,7 @@ class Book {
 }
 
 
-// Task 2 - Create a Section Class
+// Task 2 & 5 - Create a Section Class & Handle Books Borrowing and Returning
 
 class Section {
     constructor( name, books) {
@@ -55,7 +55,20 @@ class Section {
             console.log(`${book.getDetails()} - Available: ${book.isAvailable}`);
     });
     }
+
+    // Calculates total number of books available for borrowing in the section
+    calculateTotalBooksAvailable() {
+
+        // Filter and count the books that are currently available
+        let availableBooksCount = this.books.filter(book => book.isAvailable).length;
+
+        console.log(`Total available books in ${this.name}: ${availableBooksCount}`);
+
+        return availableBooksCount;
+    }
+
 }
+
 
 
 // Task 3 - Create a Patron Class
@@ -81,7 +94,7 @@ class Patron {
     returnBook(book) {
         book.isAvailable = true; // Set the book as available
         this.borrowedBooks = this.borrowedBooks.filter(borrowedBook => borrowedBook !== book); // Remove the book from borrowedBooks array
-        console.log(`Name: ${this.name}, Book returned: ${book.title}"`);
+        console.log(`Name: ${this.name}, Book returned: ${book.title}`);
     }
 }
 
@@ -101,7 +114,43 @@ class VIPPatron extends Patron {
         if (book.isAvailable) {
             super.borrowBook(book); // If the book is available, borrow it as usual
         } else {
-            console.log(`VIP ${this.name} is requesting priority to borrow "${book.title}" by ${book.author}.`);
+            console.log(`VIP: ${this.name}, Priority request: "${book.title}" by ${book.author}.`);
         }
 }}
 
+
+// Task 6 - Calculate total available books in the section
+
+// Create sections
+const fiction = new Section("Fiction");
+const science = new Section("Science");
+    
+// Create books
+const book1 = new Book("1984", "George Orwell", "1234567890");
+const book2 = new Book("Brave New World", "Aldous Huxley", "0987654321");
+const book3 = new Book("The Selfish Gene", "Richard Dawkins", "1122334455");
+
+// Add books to sections
+fiction.addBook(book1);
+fiction.addBook(book2);
+science.addBook(book3);
+
+// Create patrons
+const regularPatron = new Patron("John Doe");
+const vipPatron = new VIPPatron("Jane Smith", true);
+
+// Regular patron tries to borrow a book
+regularPatron.borrowBook(book1);
+
+// VIP patron tries to borrow a book (has priority)
+vipPatron.borrowBook(book1);
+
+// Return the book
+regularPatron.returnBook(book1);
+
+// List books and availability
+fiction.listBooks();
+
+// Calculate total available books in each section
+console.log(`Total available books in Fiction: ${fiction.getAvailableBooks()}`);
+console.log(`Total available books in Science: ${science.getAvailableBooks()}`);
