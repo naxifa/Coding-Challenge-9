@@ -10,7 +10,7 @@ class Book {
     }
     // Getter for book,author and ISBN details
     getDetails() {
-        return `${this.title} by author ${this.author}, ISBN - ${this.ISBN}`
+        return `"${this.title}" by author - ${this.author}, ISBN - ${this.ISBN}`
     }
     // Getter for if the book is available
     get isAvailable() {
@@ -100,7 +100,7 @@ class Patron {
 
 
 // Task 4 -  Create a VIPPatron Class that Inherits from Patron
-
+4
 
 class VIPPatron extends Patron {
     constructor (name) {
